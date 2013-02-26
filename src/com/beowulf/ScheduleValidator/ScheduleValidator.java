@@ -1,5 +1,4 @@
 package com.beowulf.ScheduleValidator;
-import org.allen.temporalintervalrelationships.*;
 
 import java.io.File;
 
