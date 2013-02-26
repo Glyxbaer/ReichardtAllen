@@ -1,7 +1,9 @@
 package com.beowulf.ScheduleValidator.model;
 
+public class Prof extends Person {
 
-public class Prof
-{
-    
+	public Prof(String name) {
+		super(name);
+	}
+
 }
