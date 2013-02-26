@@ -1,0 +1,39 @@
+
+A001
+----
+
+Eingabeformat teils von Ihnen festzulegen.
+
+Randbedingungen allgemeiner Art können ggf. im Code untergebracht werden, wenn dies dort gut strukturiert ist.
+z.B.: 
+- Kurs X und Kurs Y nicht gleichzeitig in der gleichen Veranstaltung des gleichen Dozenten
+- Kurs X nicht gleichzeitig in Veranstaltung A und B
+- "Hausmeisterregel"
+
+Spezielle Angaben:
+- Veranstaltung X1 muss vor Veranstaltung X2 laufen 
+- Veranstaltung X2 muss überlappend oder vor X3 laufen
+- Veranstaltung X3 ist Teil von Veranstaltung X4 (läuft also innerhalb derselben = S,f,d)
+
+Vorgegebenes csv Format:
+
+Definitionsabschnitt
+x1;Veranstaltungsname;Dozentenname
+x2;Veranstaltungsname;Dozentenname
+x3;Veranstaltungsname;Dozentenname
+x4;Veranstaltungsname;Dozentenname
+
+Beziehungsabschnitt
+
+x1;x2;<
+x2;x3;o,<
+x3;x4;s,f,d
+
+
+
+Andere Datei: konkreter Plan
+
+Startzeit;Endzeit;Veranstaltung;Dozentenname;Kursbezeichnung
+8;9;Datenbanken;Herder;AIA
+...
+
