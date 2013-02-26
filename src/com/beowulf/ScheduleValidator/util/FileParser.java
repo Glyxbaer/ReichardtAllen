@@ -6,10 +6,10 @@ import com.beowulf.ScheduleValidator.model.*;
 
 public class FileParser {
 
-	File file;
+	File constraintFile;
 
-	public FileParser(File file) {
-		this.file = file;
+	public FileParser(File constraintFile) {
+		this.constraintFile = constraintFile;
 	}
 
 	public University parse() {

@@ -7,11 +7,13 @@ public class Lecture {
 	private String name;
 	private Date date;
 	private int duration;
+	private Course course;
 
-	public Lecture(String name, Date date, int duration) {
+	public Lecture(String name, Date date, int duration, Course course) {
 		this.name = name;
 		this.date = date;
 		this.duration = duration;
+		this.course = course;
 
 	}
 
@@ -37,6 +39,14 @@ public class Lecture {
 
 	public void setDuration(int duration) {
 		this.duration = duration;
+	}
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
 	}
 
 }

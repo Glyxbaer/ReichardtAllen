@@ -1,39 +1,38 @@
 package com.beowulf.ScheduleValidator.model;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class University {
 
-	private ArrayList<Student> students;
-	private ArrayList<Prof> profs;
+	private HashMap<String, Course> courses;
+	private HashMap<String, Prof> profs;
 
 	public University() {
-		students = new ArrayList<Student>();
-		profs = new ArrayList<Prof>();
+		profs = new HashMap<String, Prof>();
 	}
 
-	public ArrayList<Student> getStudents() {
-		return students;
+	public HashMap<String, Course> getCourses() {
+		return courses;
 	}
 
-	public ArrayList<Prof> getProfs() {
+	public HashMap<String, Prof> getProfs() {
 		return profs;
 	}
 
-	public void setStudents(ArrayList<Student> students) {
-		this.students = students;
+	public void setStudents(HashMap<String, Course> students) {
+		this.courses = students;
 	}
 
-	public void setProfs(ArrayList<Prof> profs) {
+	public void setProfs(HashMap<String, Prof> profs) {
 		this.profs = profs;
 	}
 
-	public void addStudent(Student s) {
-		students.add(s);
+	public void addStudent(String key, Course s) {
+		courses.put(key, s);
 	}
 
-	public void addProf(Prof p) {
-		profs.add(p);
+	public void addProf(String key, Prof p) {
+		profs.put(key, p);
 	}
 
 }
