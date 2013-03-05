@@ -11,6 +11,7 @@ public class University {
 	
 	public University() {
 		lectures = new HashMap<String, Lecture>();
+		courses = new HashMap<String, Course>();
 	}
 
 	public HashMap<String, Course> getCourses() {
@@ -48,5 +49,15 @@ public class University {
         return relations;
      
     }
+
+	public void print() {
+
+		System.out.println("University courses:");
+		for (Course c : courses.values())
+			System.out.println("\t" + c.getName());
+		System.out.println("University lectures:");
+		for (Lecture l : lectures.values())
+			System.out.println("\t" + l.getName() + "(" + l.getProf() + ")");
+	}
 
 }
