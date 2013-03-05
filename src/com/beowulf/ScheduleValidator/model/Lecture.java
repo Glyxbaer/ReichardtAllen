@@ -8,13 +8,11 @@ public class Lecture {
 	private Date date;
 	private int duration;
 	private Course course;
+	private Prof prof;
 
-	public Lecture(String name, Date date, int duration, Course course) {
+	public Lecture(String name, Prof prof) {
 		this.name = name;
-		this.date = date;
-		this.duration = duration;
-		this.course = course;
-
+		this.prof = prof;
 	}
 
 	public String getName() {
@@ -47,6 +45,14 @@ public class Lecture {
 
 	public void setCourse(Course course) {
 		this.course = course;
+	}
+
+	public Prof getProf() {
+		return prof;
+	}
+
+	public void setProf(Prof prof) {
+		this.prof = prof;
 	}
 
 }
