@@ -1,12 +1,14 @@
 package com.beowulf.ScheduleValidator.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class University {
 
 	private HashMap<String, Course> courses;
 	private HashMap<String, Lecture> lectures;
-
+	private ArrayList<Relation> relations;
+	
 	public University() {
 		lectures = new HashMap<String, Lecture>();
 	}
@@ -34,5 +36,17 @@ public class University {
 	public void addLecture(String key, Lecture p) {
 		lectures.put(key, p);
 	}
+	
+	public void addRelation(Relation pRelation)
+	{
+	    relations.add(pRelation);
+	    
+	}
+
+    public ArrayList<Relation> getRelations()
+    {
+        return relations;
+     
+    }
 
 }
