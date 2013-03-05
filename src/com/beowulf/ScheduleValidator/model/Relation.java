@@ -6,7 +6,7 @@ public class Relation
 {
     private Lecture x1;
     private Lecture x2;
-    private ArrayList<String> cons;
+    private ArrayList<Short> cons;
 
     public Relation(Lecture p1, Lecture p2)
     {
@@ -15,7 +15,7 @@ public class Relation
 
     }
 
-    public ArrayList<String> addConstraint(String pConstraint)
+    public ArrayList<Short> addConstraint(Short pConstraint)
     {
         cons.add(pConstraint);
         return cons;
@@ -42,12 +42,12 @@ public class Relation
         this.x2 = x2;
     }
 
-    public ArrayList<String> getCons()
+    public ArrayList<Short> getCons()
     {
         return cons;
     }
 
-    public void setCons(ArrayList<String> cons)
+    public void setCons(ArrayList<Short> cons)
     {
         this.cons = cons;
     }
