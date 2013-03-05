@@ -8,9 +8,10 @@ public class Lecture {
 	private String course;
 	private String prof;
 
-	public Lecture(String name, String prof) {
+	public Lecture(String name, String prof, String course) {
 		this.name = name;
 		this.prof = prof;
+		this.course = course;
 	}
 
 	public String getName() {
@@ -54,7 +55,7 @@ public class Lecture {
 	}
 
 	public String toString() {
-		return name + "(" + prof + ", " + course + ")";
+		return name + "(" + prof + ", " + course + "): " + start + "-" + end;
 	}
 
 }

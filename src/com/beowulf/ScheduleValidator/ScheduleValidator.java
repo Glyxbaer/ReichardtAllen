@@ -12,7 +12,7 @@ public class ScheduleValidator {
 
 		FileParser myParser = new FileParser(
 				new File("conf\\constraints.conf"), new File(
-						"conf\\definitions.conf"));
+						"conf\\definitions.conf"), new File("conf\\plan.conf"));
 
 		University myUni = myParser.parse();
 		myUni.print();
