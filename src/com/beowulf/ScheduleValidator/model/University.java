@@ -8,10 +8,11 @@ public class University {
 	private HashMap<String, Course> courses;
 	private HashMap<String, Lecture> lectures;
 	private ArrayList<Relation> relations;
-	
+
 	public University() {
 		lectures = new HashMap<String, Lecture>();
 		courses = new HashMap<String, Course>();
+		relations = new ArrayList<Relation>();
 	}
 
 	public HashMap<String, Course> getCourses() {
@@ -37,18 +38,14 @@ public class University {
 	public void addLecture(String key, Lecture p) {
 		lectures.put(key, p);
 	}
-	
-	public void addRelation(Relation pRelation)
-	{
-	    relations.add(pRelation);
-	    
+
+	public void addRelation(Relation pRelation) {
+		relations.add(pRelation);
 	}
 
-    public ArrayList<Relation> getRelations()
-    {
-        return relations;
-     
-    }
+	public ArrayList<Relation> getRelations() {
+		return relations;
+	}
 
 	public void print() {
 
@@ -58,6 +55,9 @@ public class University {
 		System.out.println("University lectures:");
 		for (Lecture l : lectures.values())
 			System.out.println("\t" + l.getName() + "(" + l.getProf() + ")");
+		System.out.println("Time constraints:");
+		for (Relation r : relations)
+			System.out.println("\t" + r.toString());
 	}
 
 }

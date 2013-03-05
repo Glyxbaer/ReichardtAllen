@@ -55,33 +55,45 @@ public class FileParser {
 						switch (cons[x]) {
 						case "=":
 							rel.addConstraint(ConstraintNetwork.bin_equals);
+							break;
 						case "<":
 							rel.addConstraint(ConstraintNetwork.bin_before);
+							break;
 						case ">":
 							rel.addConstraint(ConstraintNetwork.bin_after);
+							break;
 						case "d":
 							rel.addConstraint(ConstraintNetwork.bin_during);
+							break;
 						case "di":
 							rel.addConstraint(ConstraintNetwork.bin_contains);
+							break;
 						case "o":
 							rel.addConstraint(ConstraintNetwork.bin_overlaps);
+							break;
 						case "oi":
 							rel.addConstraint(ConstraintNetwork.bin_overlappedby);
+							break;
 						case "m":
 							rel.addConstraint(ConstraintNetwork.bin_meets);
+							break;
 						case "mi":
 							rel.addConstraint(ConstraintNetwork.bin_metby);
+							break;
 						case "s":
 							rel.addConstraint(ConstraintNetwork.bin_starts);
+							break;
 						case "si":
 							rel.addConstraint(ConstraintNetwork.bin_startedby);
+							break;
 						case "f":
 							rel.addConstraint(ConstraintNetwork.bin_finishes);
+							break;
 						case "fi":
 							rel.addConstraint(ConstraintNetwork.bin_finishedby);
+							break;
 						}
 
-						rel.addConstraint(cons[x]);
 					}
 
 					uni.addRelation(rel);
