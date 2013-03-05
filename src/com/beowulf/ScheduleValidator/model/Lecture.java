@@ -1,13 +1,11 @@
 package com.beowulf.ScheduleValidator.model;
 
-import java.util.Date;
-
 public class Lecture {
 
 	private String name;
-	private Date date;
-	private int duration;
-	private Course course;
+	private int start;
+	private int end;
+	private String course;
 	private String prof;
 
 	public Lecture(String name, String prof) {
@@ -19,31 +17,31 @@ public class Lecture {
 		return name;
 	}
 
-	public Date getDate() {
-		return date;
-	}
-
-	public int getDuration() {
-		return duration;
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public int getStart() {
+		return start;
 	}
 
-	public void setDuration(int duration) {
-		this.duration = duration;
+	public void setStart(int start) {
+		this.start = start;
 	}
 
-	public Course getCourse() {
+	public int getEnd() {
+		return end;
+	}
+
+	public void setEnd(int end) {
+		this.end = end;
+	}
+
+	public String getCourse() {
 		return course;
 	}
 
-	public void setCourse(Course course) {
+	public void setCourse(String course) {
 		this.course = course;
 	}
 
@@ -53,6 +51,10 @@ public class Lecture {
 
 	public void setProf(String prof) {
 		this.prof = prof;
+	}
+
+	public String toString() {
+		return name + "(" + prof + ", " + course + ")";
 	}
 
 }
