@@ -8,9 +8,9 @@ public class Lecture {
 	private Date date;
 	private int duration;
 	private Course course;
-	private Prof prof;
+	private String prof;
 
-	public Lecture(String name, Prof prof) {
+	public Lecture(String name, String prof) {
 		this.name = name;
 		this.prof = prof;
 	}
@@ -47,11 +47,11 @@ public class Lecture {
 		this.course = course;
 	}
 
-	public Prof getProf() {
+	public String getProf() {
 		return prof;
 	}
 
-	public void setProf(Prof prof) {
+	public void setProf(String prof) {
 		this.prof = prof;
 	}
 

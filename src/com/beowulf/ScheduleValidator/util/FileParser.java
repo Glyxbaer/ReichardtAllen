@@ -37,10 +37,8 @@ public class FileParser {
 				String line;
 				while ((line = br.readLine()) != null) {
 					String[] data = line.split(";");
-					Prof prof = new Prof(data[2]);
-					Lecture lec = new Lecture(data[1], prof);
-					prof.addLecture(data[0], lec);
-					
+					Lecture lec = new Lecture(data[1], data[2]);
+					uni.addLecture(data[0], lec);
 				}
 				br.close();
 
