@@ -2,6 +2,8 @@ package com.beowulf.ScheduleValidator.model;
 
 import java.util.ArrayList;
 
+import org.allen.temporalintervalrelationships.ConstraintNetwork;
+
 public class Relation {
 	private Lecture x1;
 	private Lecture x2;
@@ -16,6 +18,52 @@ public class Relation {
 	public ArrayList<Short> addConstraint(Short pConstraint) {
 		cons.add(pConstraint);
 		return cons;
+	}
+
+	public void addConstraintsAsStrings(String[] consArray) {
+		for (int x = 0; x < consArray.length; x++) {
+			switch (consArray[x]) {
+			case "=":
+				addConstraint(ConstraintNetwork.bin_equals);
+				break;
+			case "<":
+				addConstraint(ConstraintNetwork.bin_before);
+				break;
+			case ">":
+				addConstraint(ConstraintNetwork.bin_after);
+				break;
+			case "d":
+				addConstraint(ConstraintNetwork.bin_during);
+				break;
+			case "di":
+				addConstraint(ConstraintNetwork.bin_contains);
+				break;
+			case "o":
+				addConstraint(ConstraintNetwork.bin_overlaps);
+				break;
+			case "oi":
+				addConstraint(ConstraintNetwork.bin_overlappedby);
+				break;
+			case "m":
+				addConstraint(ConstraintNetwork.bin_meets);
+				break;
+			case "mi":
+				addConstraint(ConstraintNetwork.bin_metby);
+				break;
+			case "s":
+				addConstraint(ConstraintNetwork.bin_starts);
+				break;
+			case "si":
+				addConstraint(ConstraintNetwork.bin_startedby);
+				break;
+			case "f":
+				addConstraint(ConstraintNetwork.bin_finishes);
+				break;
+			case "fi":
+				addConstraint(ConstraintNetwork.bin_finishedby);
+				break;
+			}
+		}
 
 	}
 

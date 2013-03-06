@@ -13,7 +13,7 @@ public class University {
 		relations = new ArrayList<Relation>();
 	}
 
-	public HashMap<String, Lecture> getlectures() {
+	public HashMap<String, Lecture> getLectures() {
 		return lectures;
 	}
 

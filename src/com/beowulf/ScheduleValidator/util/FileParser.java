@@ -4,9 +4,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
-import org.allen.temporalintervalrelationships.ConstraintNetwork;
 
 import com.beowulf.ScheduleValidator.model.*;
 
@@ -31,7 +32,7 @@ public class FileParser {
 		try {
 			// Read the definitionFile and add each line as an object to uni
 			br = new BufferedReader(new FileReader(definitionFile));
-			while ((line = br.readLine()) != null) {
+			while ((line = br.readLine()) != null && !line.equals("")) {
 				String[] data = line.split(";");
 				Lecture lec = new Lecture(data[1], data[2], data[3]);
 				uni.addLecture(data[0], lec);
@@ -40,55 +41,13 @@ public class FileParser {
 
 			// Read the constraintFile and add each line as an object to uni
 			br = new BufferedReader(new FileReader(constraintFile));
-			while ((line = br.readLine()) != null) {
+			while ((line = br.readLine()) != null && !line.equals("")) {
 				String[] data = line.split(";");
-				Lecture l1 = uni.getlectures().get(data[0]);
-				Lecture l2 = uni.getlectures().get(data[1]);
+				Lecture l1 = uni.getLectures().get(data[0]);
+				Lecture l2 = uni.getLectures().get(data[1]);
 				String[] cons = data[2].split(",");
 				Relation rel = new Relation(l1, l2);
-				for (int x = 0; x < cons.length; x++) {
-					switch (cons[x]) {
-					case "=":
-						rel.addConstraint(ConstraintNetwork.bin_equals);
-						break;
-					case "<":
-						rel.addConstraint(ConstraintNetwork.bin_before);
-						break;
-					case ">":
-						rel.addConstraint(ConstraintNetwork.bin_after);
-						break;
-					case "d":
-						rel.addConstraint(ConstraintNetwork.bin_during);
-						break;
-					case "di":
-						rel.addConstraint(ConstraintNetwork.bin_contains);
-						break;
-					case "o":
-						rel.addConstraint(ConstraintNetwork.bin_overlaps);
-						break;
-					case "oi":
-						rel.addConstraint(ConstraintNetwork.bin_overlappedby);
-						break;
-					case "m":
-						rel.addConstraint(ConstraintNetwork.bin_meets);
-						break;
-					case "mi":
-						rel.addConstraint(ConstraintNetwork.bin_metby);
-						break;
-					case "s":
-						rel.addConstraint(ConstraintNetwork.bin_starts);
-						break;
-					case "si":
-						rel.addConstraint(ConstraintNetwork.bin_startedby);
-						break;
-					case "f":
-						rel.addConstraint(ConstraintNetwork.bin_finishes);
-						break;
-					case "fi":
-						rel.addConstraint(ConstraintNetwork.bin_finishedby);
-						break;
-					}
-				}
+				rel.addConstraintsAsStrings(cons);
 				uni.addRelation(rel);
 			}
 			br.close();
@@ -96,8 +55,8 @@ public class FileParser {
 			// Read the planFile and add the values of each line to the
 			// corresponding objects of uni
 			br = new BufferedReader(new FileReader(planFile));
-			HashMap<String, Lecture> lectures = uni.getlectures();
-			while ((line = br.readLine()) != null) {
+			HashMap<String, Lecture> lectures = uni.getLectures();
+			while ((line = br.readLine()) != null && !line.equals("")) {
 				String[] data = line.split(";");
 				lectures.get(data[2]).setStart(Integer.valueOf(data[0]));
 				lectures.get(data[2]).setEnd(Integer.valueOf(data[1]));
@@ -108,8 +67,41 @@ public class FileParser {
 			e.printStackTrace();
 		}
 
-		return uni;
+		return convertTimesToConstraints(uni);
 
+	}
+
+	// Iterate over all lectures and convert their starttime and endtime to
+	// constraints
+	private University convertTimesToConstraints(University uni) {
+
+		ArrayList<Relation> rels = uni.getRelations();
+		HashMap<String, Lecture> lecs = uni.getLectures();
+		// Compare the times of every lecture to every the times of every other
+		// lecture
+		for (Entry<String, Lecture> e1 : lecs.entrySet()) {
+			String l1_key = e1.getKey();
+			Lecture l1_value = e1.getValue();
+			for (Entry<String, Lecture> e2 : lecs.entrySet()) {
+				String l2_key = e2.getKey();
+				Lecture l2_value = e2.getValue();
+				// if it's not the same lecture, make a relation
+				if (!l1_key.equals(l2_key)) {
+
+					int l1_start = l1_value.getStart();
+					int l1_end = l1_value.getEnd();
+					int l2_start = l2_value.getStart();
+					int l2_end = l2_value.getEnd();
+
+					// TODO compare the times and conclude the correct relations
+					
+				}
+
+			}
+
+		}
+
+		return uni;
 	}
 
 }

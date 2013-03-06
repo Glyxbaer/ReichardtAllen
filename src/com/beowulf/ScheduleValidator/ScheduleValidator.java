@@ -16,12 +16,12 @@ public class ScheduleValidator {
 
 		University myUni = myParser.parse();
 		
-		
-		 if (ConsistencyTest.testDefinitions(myUni)) {
-		 System.out.println("Timetable is consistent.");
-		 } else {
-		 System.out.println("Timetable is NOT consistent.");
-		 }
+
+		if (ConsistencyTest.testDefinitions(myUni)) {
+			System.out.println("Timetable is consistent.");
+		} else {
+			System.out.println("Timetable is NOT consistent.");
+		}
 
 	}
 
