@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-
 import com.beowulf.ScheduleValidator.model.*;
 
 public class FileParser {
@@ -87,14 +86,50 @@ public class FileParser {
 				Lecture l2_value = e2.getValue();
 				// if it's not the same lecture, make a relation
 				if (!l1_key.equals(l2_key)) {
+					Relation r = new Relation(l1_value, l2_value);
 
 					int l1_start = l1_value.getStart();
 					int l1_end = l1_value.getEnd();
 					int l2_start = l2_value.getStart();
 					int l2_end = l2_value.getEnd();
 
-					// TODO compare the times and conclude the correct relations
-					
+					// equals
+					if (l1_start == l2_start && l1_end == l2_end)
+						r.addConstraintsAsStrings(new String[] { "=" });
+					// meets
+					if (l1_end == l2_start)
+						r.addConstraintsAsStrings(new String[] { "m" });
+					// met by
+					if (l1_start == l2_end)
+						r.addConstraintsAsStrings(new String[] { "mi" });
+					// before
+					if (l1_end < l2_start)
+						r.addConstraintsAsStrings(new String[] { "<" });
+					// after
+					if (l1_start > l2_end)
+						r.addConstraintsAsStrings(new String[] { ">" });
+					// overlaps
+					if (l1_start < l2_start && l2_start < l1_end
+							&& l2_end > l1_end)
+						r.addConstraintsAsStrings(new String[] { "o" });
+					// overlapped by
+					if (l1_start > l2_start && l1_start < l2_end
+							&& l1_end > l2_end)
+						r.addConstraintsAsStrings(new String[] { "oi" });
+					// finishes
+					if (l1_start > l2_start && l1_end == l2_end)
+						r.addConstraintsAsStrings(new String[] { "f" });
+					// finished by
+					if (l1_start < l2_start && l1_end == l2_end)
+						r.addConstraintsAsStrings(new String[] { "fi" });
+					// during
+					if (l1_start > l2_start && l1_end < l2_end)
+						r.addConstraintsAsStrings(new String[] { "d" });
+					// contains
+					if (l1_start < l2_start && l1_end > l2_end)
+						r.addConstraintsAsStrings(new String[] { "di" });
+
+					rels.add(r);
 				}
 
 			}
