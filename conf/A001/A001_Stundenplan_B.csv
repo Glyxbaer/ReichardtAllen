@@ -1,0 +1,11 @@
+Startzeit;Endzeit;Veranstaltung;Dozentenname;Kursbezeichnung
+8;9;Programmieren in C;Ritchie;A
+9;10;Algorithmen und Datenstrukturen;Wirth;A
+10;11;Algorithmen und Datenstrukturen;Ottmann;B
+08:45;9;Programmierübung;Keller;A
+11;12;Formale Sprachen;Wirth;A
+11:15;12:15;Formale Sprachen;Wirth;B
+13;14;Datenbanken;Saake;A
+14;15;Wissensbasierte Systeme;Minsky;A
+12:30;13:30;Datenbanken;Heuer;B
+13:30;14:30;Wissensbasierte Systeme;Dengel;B
