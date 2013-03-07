@@ -115,7 +115,7 @@ public class ConsistencyTest
         
         for(Lecture lec : myUni.getLectures().values())
         {
-            if(lec.getStart() < opening)
+            if(lec.getStart() <= opening)
             {
                 return false;
             }

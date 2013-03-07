@@ -26,7 +26,6 @@ public class ScheduleValidator
         if (!ConsistencyTest.testOpening(myUni,input.next()))
         {
             System.out.println(">>> Opening hours do not fit the timetable. The University has to be opened BEFORE the first lecture starts.");
-            
         }
 
         if (ConsistencyTest.testDefinitions(myUni, true))
