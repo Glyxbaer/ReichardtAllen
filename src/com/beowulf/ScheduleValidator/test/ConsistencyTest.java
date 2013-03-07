@@ -17,9 +17,7 @@ public class ConsistencyTest
 
     public ConsistencyTest(University uni)
     {
-
         result = testDefinitions(uni, true);
-
     }
 
     public boolean getResult()
@@ -75,7 +73,7 @@ public class ConsistencyTest
                     {
                         if ((short) (vektor & allen) == 0)
                         {
-                            System.out.println("Conflict: " + rel.getX1().getName() + " and " + rel.getX2().getName() + ". The constraint says: " + rel.getX1().getName() + " "
+                            System.out.println("[Conflict] " + rel.getX1().getName() + " and " + rel.getX2().getName() + ". The constraint says: " + rel.getX1().getName() + " "
                                     + myConstraintNetwork.getConstraintStringFromConstraintShort(vektor) + " " + rel.getX2().getName());
                             conflict = true;
                         }
@@ -106,6 +104,24 @@ public class ConsistencyTest
 
         return defsOnly ? myConstraintNetwork.pathConsistency() : conflict;
 
+    }
+
+    public static boolean testOpening(University myUni, String pOpening)
+    {
+        
+        String[] temp = pOpening.split(":");
+        
+        int opening = new Integer(temp[0]+temp[1]);
+        
+        for(Lecture lec : myUni.getLectures().values())
+        {
+            if(lec.getStart() < opening)
+            {
+                return false;
+            }
+            
+        }
+        return true;
     }
 
 }
