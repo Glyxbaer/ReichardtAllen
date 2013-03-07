@@ -2,16 +2,26 @@ package com.beowulf.ScheduleValidator.model;
 
 public class Lecture {
 
+	private int id;
 	private String name;
 	private int start;
 	private int end;
 	private String course;
 	private String prof;
 
-	public Lecture(String name, String prof, String course) {
+	public Lecture(int id, String name, String prof, String course) {
+		this.id = id;
 		this.name = name;
 		this.prof = prof;
 		this.course = course;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {

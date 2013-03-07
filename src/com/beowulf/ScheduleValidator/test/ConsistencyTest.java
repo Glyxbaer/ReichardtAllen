@@ -1,8 +1,7 @@
 package com.beowulf.ScheduleValidator.test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 import org.allen.temporalintervalrelationships.Constraint;
 import org.allen.temporalintervalrelationships.ConstraintNetwork;
@@ -10,118 +9,202 @@ import org.allen.temporalintervalrelationships.Node;
 
 import com.beowulf.ScheduleValidator.model.*;
 
-public class ConsistencyTest
-{
+public class ConsistencyTest {
 
-    private boolean result;
+	private boolean result;
 
-    public ConsistencyTest(University uni)
-    {
-        result = testDefinitions(uni, true);
-    }
+	public ConsistencyTest(University uni) {
+		result = testDefinitions(uni, true);
+	}
 
-    public boolean getResult()
-    {
-        return result;
-    }
+	public boolean getResult() {
+		return result;
+	}
 
-    static public boolean testDefinitions(University uni, boolean defsOnly)
-    {
+	static public boolean testDefinitions(University uni, boolean defsOnly) {
 
-        ConstraintNetwork<Lecture> myConstraintNetwork = new ConstraintNetwork<Lecture>();
-        HashMap<String, Node<Lecture>> hashedmap = new HashMap<String, Node<Lecture>>();
-        HashMap<String, Constraint<Lecture>> constraintmap = new HashMap<String, Constraint<Lecture>>();
+		ConstraintNetwork<Lecture> myConstraintNetwork = new ConstraintNetwork<Lecture>();
+		HashMap<String, Node<Lecture>> hashedmap = new HashMap<String, Node<Lecture>>();
+		HashMap<String, Constraint<Lecture>> constraintmap = new HashMap<String, Constraint<Lecture>>();
 
-        String idBoth, id1, id2;
-        boolean conflict = false;
+		String idBoth, id1, id2;
+		boolean conflict = false;
 
-        for (Relation rel : uni.getRelations())
-        {
-            Node<Lecture> nodeA;
-            Node<Lecture> nodeB;
+		for (Relation rel : uni.getRelations()) {
+			Node<Lecture> nodeA;
+			Node<Lecture> nodeB;
 
-            id1 = rel.getX1().getName() + rel.getX1().getProf() + rel.getX1().getCourse();
-            id2 = rel.getX2().getName() + rel.getX2().getProf() + rel.getX2().getCourse();
-            idBoth = id1 + id2;
+			id1 = rel.getX1().getName() + rel.getX1().getProf()
+					+ rel.getX1().getCourse();
+			id2 = rel.getX2().getName() + rel.getX2().getProf()
+					+ rel.getX2().getCourse();
+			idBoth = id1 + id2;
 
-            if ((nodeA = hashedmap.get(id1)) == null)
-            {
+			if ((nodeA = hashedmap.get(id1)) == null) {
 
-                nodeA = new Node<Lecture>(rel.getX1());
-                hashedmap.put(id1, nodeA);
-                myConstraintNetwork.addNode(nodeA);
+				nodeA = new Node<Lecture>(rel.getX1());
+				hashedmap.put(id1, nodeA);
+				myConstraintNetwork.addNode(nodeA);
 
-            }
+			}
 
-            if ((nodeB = hashedmap.get(id2)) == null)
-            {
+			if ((nodeB = hashedmap.get(id2)) == null) {
 
-                nodeB = new Node<Lecture>(rel.getX2());
-                hashedmap.put(id2, nodeB);
-                myConstraintNetwork.addNode(nodeB);
-            }
+				nodeB = new Node<Lecture>(rel.getX2());
+				hashedmap.put(id2, nodeB);
+				myConstraintNetwork.addNode(nodeB);
+			}
 
-            Short vektor = 0;
+			Short vektor = 0;
 
-            if (constraintmap.get(idBoth) != null)
-            {
-                vektor = constraintmap.get(idBoth).getConstraints();
+			if (constraintmap.get(idBoth) != null) {
+				vektor = constraintmap.get(idBoth).getConstraints();
 
-                if (!defsOnly)
-                {
-                    for (Short allen : rel.getCons())
-                    {
-                        if ((short) (vektor & allen) == 0)
-                        {
-                            System.out.println("[Conflict] " + rel.getX1().getName() + " and " + rel.getX2().getName() + ". The constraint says: " + rel.getX1().getName() + " "
-                                    + myConstraintNetwork.getConstraintStringFromConstraintShort(vektor) + " " + rel.getX2().getName());
-                            conflict = true;
-                        }
-                    }
-                    vektor = 0;
-                }
+				if (!defsOnly) {
+					for (Short allen : rel.getCons()) {
+						if ((short) (vektor & allen) == 0) {
+							System.out
+									.println("[Conflict] "
+											+ rel.getX1().getName()
+											+ " and "
+											+ rel.getX2().getName()
+											+ ". The constraint says: "
+											+ rel.getX1().getName()
+											+ " "
+											+ myConstraintNetwork
+													.getConstraintStringFromConstraintShort(vektor)
+											+ " " + rel.getX2().getName());
+							conflict = true;
+						}
+					}
+					vektor = 0;
+				}
 
-            }
+			}
 
-            for (Short allen : rel.getCons())
-            {
-                vektor = (short) (vektor | allen);
-            }
+			for (Short allen : rel.getCons()) {
+				vektor = (short) (vektor | allen);
+			}
 
-            constraintmap.put(idBoth, new Constraint<Lecture>(nodeA, nodeB, vektor));
+			constraintmap.put(idBoth, new Constraint<Lecture>(nodeA, nodeB,
+					vektor));
 
-        }
+		}
 
-        for (Constraint<Lecture> value : constraintmap.values())
-        {
-            // System.out.println("Constraint: " +
-            // value.getSourceNode().getIdentifier().getName() + " "
-            // +
-            // myConstraintNetwork.getConstraintStringFromConstraintShort(value.getConstraints())
-            // + " " + value.getDestinationNode().getIdentifier().getName());
-            myConstraintNetwork.addConstraint(value);
-        }
+		for (Constraint<Lecture> value : constraintmap.values()) {
+			// System.out.println("Constraint: " +
+			// value.getSourceNode().getIdentifier().getName() + " "
+			// +
+			// myConstraintNetwork.getConstraintStringFromConstraintShort(value.getConstraints())
+			// + " " + value.getDestinationNode().getIdentifier().getName());
+			myConstraintNetwork.addConstraint(value);
+		}
 
-        return defsOnly ? myConstraintNetwork.pathConsistency() : conflict;
+		return defsOnly ? myConstraintNetwork.pathConsistency() : conflict;
 
-    }
+	}
 
-    public static boolean testOpening(University myUni, String pOpening)
-    {
-        
-        String[] temp = pOpening.split(":");
-        
-        int opening = new Integer(temp[0]+temp[1]);
-        
-        for(Lecture lec : myUni.getLectures().values())
-        {
-            if(lec.getStart() <= opening)
-            {
-                return false;
-            }
-            
-        }
-        return true;
-    }
+	public static boolean testOpening(University myUni, String pOpening) {
+
+		String[] temp = pOpening.split(":");
+
+		int opening = new Integer(temp[0] + temp[1]);
+
+		for (Lecture lec : myUni.getLectures().values()) {
+			if (lec.getStart() < opening) {
+				return false;
+			}
+
+		}
+		return true;
+	}
+
+	// Test if a course has 2 lectures at the same time
+	public static boolean testCourses(University myUni) {
+		boolean valid = true;
+		for (String course : myUni.getCourses().values()) {
+			ArrayList<Lecture> tempLectures = new ArrayList<Lecture>();
+			for (Lecture lec : myUni.getLectures().values()) {
+				if (course.equals(lec.getCourse()))
+					tempLectures.add(lec);
+			}
+			HashMap<String, String> faults = validateLectures(tempLectures,
+					myUni.getRelations());
+			if (faults.size() > 0) {
+				System.out.println("[Conflict] The course " + course
+						+ " cannot have two lectures at the same time:");
+				for (String entry : faults.values())
+					System.out.println("\t" + entry);
+				valid = false;
+			}
+		}
+
+		return valid;
+	}
+
+	// Test if a prof has 2 lectures at the same time
+	public static boolean testProfessors(University myUni) {
+		boolean valid = true;
+		for (String prof : myUni.getProfs().values()) {
+			ArrayList<Lecture> tempLectures = new ArrayList<Lecture>();
+			for (Lecture lec : myUni.getLectures().values()) {
+				if (prof.equals(lec.getProf()))
+					tempLectures.add(lec);
+			}
+			HashMap<String, String> faults = validateLectures(tempLectures,
+					myUni.getRelations());
+			if (faults.size() > 0) {
+				System.out.println("[Conflict] The professor " + prof
+						+ " cannot have two lectures at the same time:");
+				for (String entry : faults.values())
+					System.out.println("\t" + entry);
+				valid = false;
+			}
+		}
+
+		return valid;
+	}
+
+	// Utility method to check if lectures overlap
+	private static HashMap<String, String> validateLectures(
+			ArrayList<Lecture> lecs, ArrayList<Relation> rels) {
+		HashMap<String, String> faults = new HashMap<String, String>();
+
+		// Iterate over all lectures and compare the times with the ones of
+		// every other lecture
+		for (Lecture l1 : lecs) {
+			for (Lecture l2 : lecs) {
+				if (!(l1.getEnd() <= l2.getStart() || l1.getStart() >= l2
+						.getEnd()) && l1.getId() != l2.getId()) {
+					boolean valid = false;
+					// Check if it is permitted by a during/contains constraint
+					for (Relation r : rels) {
+						if ((r.getX1().getId() == l1.getId() || r.getX1()
+								.getId() == l2.getId())
+								&& (r.getX2().getId() == l1.getId())
+								|| r.getX2().getId() == l2.getId()) {
+							for (Short constraint : r.getCons()) {
+								if (constraint == ConstraintNetwork.bin_during
+										|| constraint == ConstraintNetwork.bin_contains)
+									valid = true;
+							}
+							if (!valid) {
+								String key = "";
+								if (l1.getId() < l2.getId())
+									key = String.valueOf(l1)
+											+ String.valueOf(l2);
+								else
+									key = String.valueOf(l2)
+											+ String.valueOf(l1);
+								faults.put(key,
+										l1.toString() + " and " + l2.toString());
+							}
+						}
+					}
+				}
+			}
+		}
+		return faults;
+	}
 
 }

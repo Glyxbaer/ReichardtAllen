@@ -43,4 +43,22 @@ public class University {
 			System.out.println("\t" + r.toString());
 	}
 
+	public HashMap<String, String> getCourses() {
+		HashMap<String, String> courses = new HashMap<String, String>();
+
+		for (Lecture l : lectures.values())
+			courses.put(l.getCourse(), l.getCourse());
+
+		return courses;
+	}
+
+	public HashMap<String, String> getProfs() {
+		HashMap<String, String> profs = new HashMap<String, String>();
+
+		for (Lecture l : lectures.values())
+			profs.put(l.getProf(), l.getProf());
+
+		return profs;
+	}
+
 }

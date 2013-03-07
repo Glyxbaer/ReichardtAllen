@@ -34,22 +34,27 @@ public class FileParser {
 			// Read the definitionFile and add each line as an object to uni
 			br = new BufferedReader(new FileReader(definitionFile));
 			while ((line = br.readLine()) != null && !line.equals("")) {
-				String[] data = line.split(";");
-				Lecture lec = new Lecture(data[1], data[2], data[3]);
-				uni.addLecture(data[0], lec);
+				if (!(line.substring(0, 2).equals("//"))) {
+					String[] data = line.split(";");
+					Lecture lec = new Lecture(Integer.valueOf(data[0]),
+							data[1], data[2], data[3]);
+					uni.addLecture(data[0], lec);
+				}
 			}
 			br.close();
 
 			// Read the constraintFile and add each line as an object to uni
 			br = new BufferedReader(new FileReader(constraintFile));
 			while ((line = br.readLine()) != null && !line.equals("")) {
-				String[] data = line.split(";");
-				Lecture l1 = uni.getLectures().get(data[0]);
-				Lecture l2 = uni.getLectures().get(data[1]);
-				String[] cons = data[2].split(",");
-				Relation rel = new Relation(l1, l2);
-				rel.addConstraintsAsStrings(cons);
-				uni.addRelation(rel);
+				if (!(line.substring(0, 2).equals("//"))) {
+					String[] data = line.split(";");
+					Lecture l1 = uni.getLectures().get(data[0]);
+					Lecture l2 = uni.getLectures().get(data[1]);
+					String[] cons = data[2].split(",");
+					Relation rel = new Relation(l1, l2);
+					rel.addConstraintsAsStrings(cons);
+					uni.addRelation(rel);
+				}
 			}
 			br.close();
 
@@ -58,9 +63,11 @@ public class FileParser {
 			br = new BufferedReader(new FileReader(planFile));
 			HashMap<String, Lecture> lectures = uni.getLectures();
 			while ((line = br.readLine()) != null && !line.equals("")) {
-				String[] data = line.split(";");
-				lectures.get(data[2]).setStart(Integer.valueOf(data[0]));
-				lectures.get(data[2]).setEnd(Integer.valueOf(data[1]));
+				if (!(line.substring(0, 2).equals("//"))) {
+					String[] data = line.split(";");
+					lectures.get(data[2]).setStart(Integer.valueOf(data[0]));
+					lectures.get(data[2]).setEnd(Integer.valueOf(data[1]));
+				}
 			}
 			br.close();
 
@@ -74,52 +81,59 @@ public class FileParser {
 
 	public University parseConstraintsOnly() {
 
-	       University uni = new University();
-	        BufferedReader br;
-	        String line;
+		University uni = new University();
+		BufferedReader br;
+		String line;
 
-	        try {
-	            // Read the definitionFile and add each line as an object to uni
-	            br = new BufferedReader(new FileReader(definitionFile));
-	            while ((line = br.readLine()) != null && !line.equals("")) {
-	                String[] data = line.split(";");
-	                Lecture lec = new Lecture(data[1], data[2], data[3]);
-	                uni.addLecture(data[0], lec);
-	            }
-	            br.close();
+		try {
+			// Read the definitionFile and add each line as an object to uni
+			br = new BufferedReader(new FileReader(definitionFile));
+			while ((line = br.readLine()) != null && !line.equals("")) {
+				if (!(line.substring(0, 2).equals("//"))) {
+					String[] data = line.split(";");
+					Lecture lec = new Lecture(Integer.valueOf(data[0]),
+							data[1], data[2], data[3]);
+					uni.addLecture(data[0], lec);
+				}
+			}
+			br.close();
 
-	            // Read the constraintFile and add each line as an object to uni
-	            br = new BufferedReader(new FileReader(constraintFile));
-	            while ((line = br.readLine()) != null && !line.equals("")) {
-	                String[] data = line.split(";");
-	                Lecture l1 = uni.getLectures().get(data[0]);
-	                Lecture l2 = uni.getLectures().get(data[1]);
-	                String[] cons = data[2].split(",");
-	                Relation rel = new Relation(l1, l2);
-	                rel.addConstraintsAsStrings(cons);
-	                uni.addRelation(rel);
-	            }
-	            br.close();
+			// Read the constraintFile and add each line as an object to uni
+			br = new BufferedReader(new FileReader(constraintFile));
+			while ((line = br.readLine()) != null && !line.equals("")) {
+				if (!(line.substring(0, 2).equals("//"))) {
+					String[] data = line.split(";");
+					Lecture l1 = uni.getLectures().get(data[0]);
+					Lecture l2 = uni.getLectures().get(data[1]);
+					String[] cons = data[2].split(",");
+					Relation rel = new Relation(l1, l2);
+					rel.addConstraintsAsStrings(cons);
+					uni.addRelation(rel);
+				}
+			}
+			br.close();
 
-	            // Read the planFile and add the values of each line to the
-	            // corresponding objects of uni
-	            br = new BufferedReader(new FileReader(planFile));
-	            HashMap<String, Lecture> lectures = uni.getLectures();
-	            while ((line = br.readLine()) != null && !line.equals("")) {
-	                String[] data = line.split(";");
-	                lectures.get(data[2]).setStart(Integer.valueOf(data[0]));
-	                lectures.get(data[2]).setEnd(Integer.valueOf(data[1]));
-	            }
-	            br.close();
+			// Read the planFile and add the values of each line to the
+			// corresponding objects of uni
+			br = new BufferedReader(new FileReader(planFile));
+			HashMap<String, Lecture> lectures = uni.getLectures();
+			while ((line = br.readLine()) != null && !line.equals("")) {
+				if (!(line.substring(0, 2).equals("//"))) {
+					String[] data = line.split(";");
+					lectures.get(data[2]).setStart(Integer.valueOf(data[0]));
+					lectures.get(data[2]).setEnd(Integer.valueOf(data[1]));
+				}
+			}
+			br.close();
 
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-	        return uni;
+		return uni;
 
+	}
 
-    }
 	// Iterate over all lectures and convert their starttime and endtime to
 	// constraints
 	private University convertTimesToConstraints(University uni) {

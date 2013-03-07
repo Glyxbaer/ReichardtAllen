@@ -96,6 +96,8 @@ public class Relation {
 		StringBuffer end = new StringBuffer();
 		for (Short s : cons)
 			end.append(s + ",");
+		if (end.length() == 0)
+			end.append(",");
 		return front + end.substring(0, end.length() - 1);
 	}
 }
