@@ -21,7 +21,7 @@ public class ScheduleValidator
         University myUni = myParser.parseConstraintsOnly();
         University myUni2 = myParser.parse();
         Scanner input = new Scanner(System.in);
-        System.out.print("Please enter the opening time (Format: HH:MM)");
+        System.out.print("Please enter the opening time (Format: HH:MM): ");
         
         if (!ConsistencyTest.testOpening(myUni,input.next()))
         {
