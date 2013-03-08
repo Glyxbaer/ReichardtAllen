@@ -1,19 +1,20 @@
-Nummer;Veranstaltungsname;Dozentenname
-1;Programmieren in C;Wirth
-2;Algorithmen und Datenstrukturen;Wirth
-3;Programmieren in C;Kernighan
-4;Programmieren in C;Ritchie
-5;Algorithmen und Datenstrukturen;Ottmann
-6;Datenbanken;Herder
-7;Datenbanken;Heuer
-8;Wissensbasierte Systeme;Minsky
-9;Wissensbasierte Systeme;Dengel
-10;Formale Sprachen;Wirth
-11;Formale Sprachen;Chomsky
-12;Wissensbasierte Systeme;Dengel
-13;Formale Sprachen;Wirth
-14;Datenbanken;Saake
-15;Algorithmen und Datenstrukturen;Wirth
-16;Programmierübung;Keller
-17;Programmierübung;Keller
-18;Programmierübung;Keller
+//Nummer;Veranstaltungsname;Dozentenname
+1;Programmieren in C;Wirth;A
+2;Algorithmen und Datenstrukturen;Wirth;B
+3;Programmieren in C;Kernighan;A
+4;Programmieren in C;Ritchie;A
+5;Algorithmen und Datenstrukturen;Ottmann;A
+6;Datenbanken;Herder;B
+7;Datenbanken;Heuer;B
+8;Wissensbasierte Systeme;Minsky;A
+9;Wissensbasierte Systeme;Dengel;B
+10;Formale Sprachen;Wirth;A
+11;Formale Sprachen;Chomsky;A
+12;Wissensbasierte Systeme;Dengel;A
+13;Formale Sprachen;Wirth;B
+14;Datenbanken;Saake;A
+15;Algorithmen und Datenstrukturen;Wirth;A
+16;Programmierübung;Keller;A
+17;Algorithmen und Datenstrukturen;Ottmann;B
+18;Programmierübung;Keller;B
+19;Programmierübung;Keller;C

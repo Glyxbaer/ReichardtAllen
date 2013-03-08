@@ -1,11 +1,11 @@
-Startzeit;Endzeit;Veranstaltung;Dozentenname;Kursbezeichnung
-8;9;Programmieren in C;Wirth;A
-9;10;Algorithmen und Datenstrukturen;Ottmann;A
-10;11;Algorithmen und Datenstrukturen;Wirth;B
-08:45;9;Programmierübung;Keller;A
-11;12;Formale Sprachen;Chomsky;A
-11:15;12:15;Formale Sprachen;Wirth;B
-13;14;Datenbanken;Saake;A
-14;15;Wissensbasierte Systeme;Dengel;A
-12:30;13:30;Datenbanken;Herder;B
-15:15;16:15;Wissensbasierte Systeme;Dengel;B
+//Startzeit;Endzeit;Veranstaltung;Dozentenname;Kursbezeichnung
+0800;0900;1
+0900;1000;5
+1000;1100;2
+0845;0900;16
+1100;1200;11
+1115;1215;13
+1300;1400;14
+1400;1500;12
+1230;1330;6
+1515;1615;9

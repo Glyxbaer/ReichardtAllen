@@ -6,74 +6,87 @@ import com.beowulf.ScheduleValidator.model.*;
 import com.beowulf.ScheduleValidator.test.ConsistencyTest;
 import com.beowulf.ScheduleValidator.util.FileParser;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Map.Entry;
 
-public class ScheduleValidator {
+public class ScheduleValidator
+{
 
-	public static void main(String[] args) {
+    public static void main(String[] args)
+    {
 
-		FileParser myParser = new FileParser(
-				new File("conf\\constraints.conf"), new File(
-						"conf\\definitions.conf"), new File("conf\\plan.conf"));
+        FileParser myParser = new FileParser(new File("conf\\A001\\A001_Beziehungen.csv"), new File("conf\\A001\\A001_Veranstaltungen.csv"), new File(
+                "conf\\A001\\A001_Stundenplan_B.csv"));
 
-		University myUni = myParser.parseConstraintsOnly();
-		University myUni2 = myParser.parse();
+        // University myUni = myParser.parseConstraintsOnly();
+        University myUni = myParser.parse();
 
-		Scanner input = new Scanner(System.in);
-		System.out.print("Please enter the opening time (Format: HH:MM): ");
+        Scanner input = new Scanner(System.in);
+        System.out.print("Please enter the opening time (Format: HH:MM): ");
 
-		if (!ConsistencyTest.testOpening(myUni, input.next())) {
-			System.out
-					.println(">>> Opening hours do not fit the timetable. The University has to be opened BEFORE the first lecture starts.");
-		}
+        // Check if the opening hours fit the timetable
+        if (!ConsistencyTest.testOpening(myUni, input.next()))
+        {
+            System.out.println("[ERROR] Please open the university earlier. The University has to be opened BEFORE the first lecture starts.");
+        }
 
-		if (ConsistencyTest.testDefinitions(myUni, true)) {
-			System.out.println(">>> Constraints are consistent.. ");
+        // Check if the constraints from the constraintsfile are consistent
+        for (String msg : ConsistencyTest.testConstraintsOnly(myUni))
+        {
+            System.out.println(msg);
+        }
 
-			if (ConsistencyTest.testDefinitions(myUni2, false)) {
-				System.out
-						.println("[ERROR] There were conflicts in the timetable. Please refer to the errormessages above.");
-			} else {
-				System.out
-						.println(">>> There were no conflicts in the timetable..");
-			}
-		} else {
-			System.out.println("Definitions are NOT consistent.");
-		}
+        // Check if there exist any errors between the constraintsfile and the
+        // timetable
+        ArrayList<String> errMsgs = ConsistencyTest.testConstraintsWithTimetable(myUni);
+        if (errMsgs.size() > 0)
+        {
+            System.out.println("[ERROR] There are conflicts between the constraints and the timetable:");
+            for (String msg : errMsgs)
+            {
+                System.out.println("\t" + msg);
+            }
+        }
+        else
+        {
+            System.out.println(">>> There are no conflicts between the constraints and the timetable.");
+        }
 
-		// Course-Lecture testing
-		HashMap<String, HashMap<String, String>> courseErrors = ConsistencyTest
-				.testCourses(myUni2);
-		if (courseErrors.size() > 0) {
-			System.out
-					.println("[ERROR] There were conflicts in the course-lecture correlation:");
-			for (Entry<String, HashMap<String, String>> entry : courseErrors
-					.entrySet()) {
-				System.out.println("\t[Conflict] The course " + entry.getKey()
-						+ " cannot have two lectures at the same time:");
-				for (String string : entry.getValue().values())
-					System.out.println("\t\t" + string);
-			}
-		}
+        // Course-Lecture testing
+        HashMap<String, HashMap<String, String>> courseErrors = ConsistencyTest.testCourses(myUni);
+        if (courseErrors.size() > 0)
+        {
+            System.out.println("[ERROR] There are conflicts in the course-lecture correlation:");
+            for (Entry<String, HashMap<String, String>> entry : courseErrors.entrySet())
+            {
+                System.out.println("\t[Conflict] The course " + entry.getKey() + " cannot have two lectures at the same time:");
+                for (String string : entry.getValue().values())
+                    System.out.println("\t\t" + string);
+            }
+        }
+        else
+        {
+            System.out.println(">>> There are no interferences of the courses.");
+        }
 
-		// Professor-Lecture testing
-		HashMap<String, HashMap<String, String>> profErrors = ConsistencyTest
-				.testProfessors(myUni2);
-		if (profErrors.size() > 0) {
-			System.out
-					.println("[ERROR] There were conflicts in the professor-lecture correlation:");
-			for (Entry<String, HashMap<String, String>> entry : profErrors
-					.entrySet()) {
-				System.out.println("\t[Conflict] The professor "
-						+ entry.getKey()
-						+ " cannot have two lectures at the same time:");
-				for (String string : entry.getValue().values())
-					System.out.println("\t\t" + string);
-			}
-		}
+        // Professor-Lecture testing
+        HashMap<String, HashMap<String, String>> profErrors = ConsistencyTest.testProfessors(myUni);
+        if (profErrors.size() > 0)
+        {
+            System.out.println("[ERROR] There are conflicts in the professor-lecture correlation:");
+            for (Entry<String, HashMap<String, String>> entry : profErrors.entrySet())
+            {
+                System.out.println("\t[Conflict] The professor " + entry.getKey() + " cannot have two lectures at the same time:");
+                for (String string : entry.getValue().values())
+                    System.out.println("\t\t" + string);
+            }
+        }
+        else
+        {
+            System.out.println(">>> There are no interferences of the professors.");
+        }
 
-	}
-
+    }
 }

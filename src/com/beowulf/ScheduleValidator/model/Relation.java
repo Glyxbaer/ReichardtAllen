@@ -62,6 +62,9 @@ public class Relation {
 			case "fi":
 				addConstraint(ConstraintNetwork.bin_finishedby);
 				break;
+	        case "all":
+                addConstraint(ConstraintNetwork.bin_all);
+                break;
 			}
 		}
 

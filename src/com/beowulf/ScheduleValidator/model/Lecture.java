@@ -14,6 +14,7 @@ public class Lecture {
 		this.name = name;
 		this.prof = prof;
 		this.course = course;
+		
 	}
 
 	public int getId() {

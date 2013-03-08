@@ -147,6 +147,7 @@ public class FileParser {
 		for (Entry<String, Lecture> e1 : lecs.entrySet()) {
 			String l1_key = e1.getKey();
 			Lecture l1_value = e1.getValue();
+
 			for (Entry<String, Lecture> e2 : lecs.entrySet()) {
 				String l2_key = e2.getKey();
 				Lecture l2_value = e2.getValue();
@@ -159,6 +160,13 @@ public class FileParser {
 					int l2_start = l2_value.getStart();
 					int l2_end = l2_value.getEnd();
 
+		            if (l1_start == 0 || l2_start ==0){
+		                r.addConstraintsAsStrings(new String[] { "all" });
+		                
+		            }
+					
+
+                       
 					// equals
 					if (l1_start == l2_start && l1_end == l2_end)
 						r.addConstraintsAsStrings(new String[] { "=" });
