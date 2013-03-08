@@ -1,4 +1,4 @@
-//Nummer;Veranstaltungsname;Dozentenname
+//ID;Veranstaltungsname;Dozentenname;Kurs
 1;Programmieren in C;Wirth;A
 2;Algorithmen und Datenstrukturen;Wirth;B
 3;Programmieren in C;Kernighan;A

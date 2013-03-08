@@ -1,8 +1,8 @@
-//Startzeit;Endzeit;Veranstaltung;Dozentenname;Kursbezeichnung
-0800;0900;4
-0900;1000;1
+//Startzeit;Endzeit;Veranstaltungs-ID
+800;900;4
+900;1000;1
 1000;1100;17
-0845;0900;16
+845;900;16
 1100;1200;10
 1115;1215;13
 1300;1400;14
