@@ -54,6 +54,7 @@ public class FileParser {
 					Relation rel = new Relation(l1, l2);
 					rel.addConstraintsAsStrings(cons);
 					uni.addRelation(rel);
+					uni.addRule(rel);
 				}
 			}
 			br.close();
@@ -109,6 +110,7 @@ public class FileParser {
 					Relation rel = new Relation(l1, l2);
 					rel.addConstraintsAsStrings(cons);
 					uni.addRelation(rel);
+					uni.addRule(rel);
 				}
 			}
 			br.close();

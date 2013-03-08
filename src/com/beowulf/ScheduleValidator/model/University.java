@@ -7,10 +7,12 @@ public class University {
 
 	private HashMap<String, Lecture> lectures;
 	private ArrayList<Relation> relations;
+	private ArrayList<Relation> rules;
 
 	public University() {
 		lectures = new HashMap<String, Lecture>();
 		relations = new ArrayList<Relation>();
+		rules = new ArrayList<Relation>();
 	}
 
 	public HashMap<String, Lecture> getLectures() {
@@ -31,6 +33,14 @@ public class University {
 
 	public ArrayList<Relation> getRelations() {
 		return relations;
+	}
+	
+	public void addRule(Relation relation) {
+		rules.add(relation);
+	}
+
+	public ArrayList<Relation> getRules() {
+		return rules;
 	}
 
 	public void print() {

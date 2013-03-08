@@ -5,7 +5,10 @@ import java.io.File;
 import com.beowulf.ScheduleValidator.model.*;
 import com.beowulf.ScheduleValidator.test.ConsistencyTest;
 import com.beowulf.ScheduleValidator.util.FileParser;
+
+import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Map.Entry;
 
 public class ScheduleValidator {
 
@@ -40,14 +43,35 @@ public class ScheduleValidator {
 			System.out.println("Definitions are NOT consistent.");
 		}
 
-		if (!ConsistencyTest.testCourses(myUni2)) {
+		// Course-Lecture testing
+		HashMap<String, HashMap<String, String>> courseErrors = ConsistencyTest
+				.testCourses(myUni2);
+		if (courseErrors.size() > 0) {
 			System.out
-					.println("[ERROR] There were conflicts in the course-lecture correlation. Please refer to the error messages above.");
+					.println("[ERROR] There were conflicts in the course-lecture correlation:");
+			for (Entry<String, HashMap<String, String>> entry : courseErrors
+					.entrySet()) {
+				System.out.println("\t[Conflict] The course " + entry.getKey()
+						+ " cannot have two lectures at the same time:");
+				for (String string : entry.getValue().values())
+					System.out.println("\t\t" + string);
+			}
 		}
-		
-		if (!ConsistencyTest.testProfessors(myUni2)) {
+
+		// Professor-Lecture testing
+		HashMap<String, HashMap<String, String>> profErrors = ConsistencyTest
+				.testProfessors(myUni2);
+		if (profErrors.size() > 0) {
 			System.out
-					.println("[ERROR] There were conflicts in the professor-lecture correlation. Please refer to the error messages above.");
+					.println("[ERROR] There were conflicts in the professor-lecture correlation:");
+			for (Entry<String, HashMap<String, String>> entry : profErrors
+					.entrySet()) {
+				System.out.println("\t[Conflict] The professor "
+						+ entry.getKey()
+						+ " cannot have two lectures at the same time:");
+				for (String string : entry.getValue().values())
+					System.out.println("\t\t" + string);
+			}
 		}
 
 	}

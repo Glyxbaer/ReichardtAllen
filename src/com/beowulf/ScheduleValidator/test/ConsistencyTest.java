@@ -120,8 +120,9 @@ public class ConsistencyTest {
 	}
 
 	// Test if a course has 2 lectures at the same time
-	public static boolean testCourses(University myUni) {
-		boolean valid = true;
+	public static HashMap<String, HashMap<String, String>> testCourses(
+			University myUni) {
+		HashMap<String, HashMap<String, String>> errors = new HashMap<String, HashMap<String, String>>();
 		for (String course : myUni.getCourses().values()) {
 			ArrayList<Lecture> tempLectures = new ArrayList<Lecture>();
 			for (Lecture lec : myUni.getLectures().values()) {
@@ -129,22 +130,18 @@ public class ConsistencyTest {
 					tempLectures.add(lec);
 			}
 			HashMap<String, String> faults = validateLectures(tempLectures,
-					myUni.getRelations());
-			if (faults.size() > 0) {
-				System.out.println("[Conflict] The course " + course
-						+ " cannot have two lectures at the same time:");
-				for (String entry : faults.values())
-					System.out.println("\t" + entry);
-				valid = false;
-			}
+					myUni.getRules());
+			if (faults.size() > 0)
+				errors.put(course, faults);
 		}
 
-		return valid;
+		return errors;
 	}
 
 	// Test if a prof has 2 lectures at the same time
-	public static boolean testProfessors(University myUni) {
-		boolean valid = true;
+	public static HashMap<String, HashMap<String, String>> testProfessors(
+			University myUni) {
+		HashMap<String, HashMap<String, String>> errors = new HashMap<String, HashMap<String, String>>();
 		for (String prof : myUni.getProfs().values()) {
 			ArrayList<Lecture> tempLectures = new ArrayList<Lecture>();
 			for (Lecture lec : myUni.getLectures().values()) {
@@ -152,17 +149,12 @@ public class ConsistencyTest {
 					tempLectures.add(lec);
 			}
 			HashMap<String, String> faults = validateLectures(tempLectures,
-					myUni.getRelations());
-			if (faults.size() > 0) {
-				System.out.println("[Conflict] The professor " + prof
-						+ " cannot have two lectures at the same time:");
-				for (String entry : faults.values())
-					System.out.println("\t" + entry);
-				valid = false;
-			}
+					myUni.getRules());
+			if (faults.size() > 0)
+				errors.put(prof, faults);
 		}
 
-		return valid;
+		return errors;
 	}
 
 	// Utility method to check if lectures overlap
@@ -172,34 +164,35 @@ public class ConsistencyTest {
 
 		// Iterate over all lectures and compare the times with the ones of
 		// every other lecture
+		boolean valid;
 		for (Lecture l1 : lecs) {
 			for (Lecture l2 : lecs) {
 				if (!(l1.getEnd() <= l2.getStart() || l1.getStart() >= l2
 						.getEnd()) && l1.getId() != l2.getId()) {
-					boolean valid = false;
+
+					valid = false;
 					// Check if it is permitted by a during/contains constraint
 					for (Relation r : rels) {
 						if ((r.getX1().getId() == l1.getId() || r.getX1()
 								.getId() == l2.getId())
-								&& (r.getX2().getId() == l1.getId())
-								|| r.getX2().getId() == l2.getId()) {
+								&& (r.getX2().getId() == l1.getId() || r
+										.getX2().getId() == l2.getId())) {
 							for (Short constraint : r.getCons()) {
+
 								if (constraint == ConstraintNetwork.bin_during
 										|| constraint == ConstraintNetwork.bin_contains)
 									valid = true;
 							}
-							if (!valid) {
-								String key = "";
-								if (l1.getId() < l2.getId())
-									key = String.valueOf(l1)
-											+ String.valueOf(l2);
-								else
-									key = String.valueOf(l2)
-											+ String.valueOf(l1);
-								faults.put(key,
-										l1.toString() + " and " + l2.toString());
-							}
 						}
+					}
+
+					if (!valid) {
+						String key = "";
+						if (l1.getId() < l2.getId())
+							key = String.valueOf(l1) + String.valueOf(l2);
+						else
+							key = String.valueOf(l2) + String.valueOf(l1);
+						faults.put(key, l1.toString() + " and " + l2.toString());
 					}
 				}
 			}
