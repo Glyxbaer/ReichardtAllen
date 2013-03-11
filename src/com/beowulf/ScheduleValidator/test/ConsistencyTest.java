@@ -164,7 +164,9 @@ public class ConsistencyTest {
 								&& (r.getX2().getId() == l1.getId() || r.getX2().getId() == l2.getId())) {
 							for (Short constraint : r.getCons()) {
 								if (constraint == ConstraintNetwork.bin_during
-										|| constraint == ConstraintNetwork.bin_contains)
+										|| constraint == ConstraintNetwork.bin_contains
+										|| constraint == ConstraintNetwork.bin_finishes
+										|| constraint == ConstraintNetwork.bin_finishedby)
 									valid = true;
 							}
 						}
