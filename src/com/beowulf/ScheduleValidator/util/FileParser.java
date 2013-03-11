@@ -24,6 +24,8 @@ public class FileParser {
 		this.planFile = planFile;
 	}
 
+	// Read the data from the 3 config files and create a University Object
+	// filled with it
 	public University parse() {
 
 		University uni = new University();
@@ -36,8 +38,7 @@ public class FileParser {
 			while ((line = br.readLine()) != null && !line.equals("")) {
 				if (!(line.substring(0, 2).equals("//"))) {
 					String[] data = line.split(";");
-					Lecture lec = new Lecture(Integer.valueOf(data[0]),
-							data[1], data[2], data[3]);
+					Lecture lec = new Lecture(Integer.valueOf(data[0]), data[1], data[2], data[3]);
 					uni.addLecture(data[0], lec);
 				}
 			}
@@ -80,64 +81,8 @@ public class FileParser {
 
 	}
 
-	public University parseConstraintsOnly() {
-
-		University uni = new University();
-		BufferedReader br;
-		String line;
-
-		try {
-			// Read the definitionFile and add each line as an object to uni
-			br = new BufferedReader(new FileReader(definitionFile));
-			while ((line = br.readLine()) != null && !line.equals("")) {
-				if (!(line.substring(0, 2).equals("//"))) {
-					String[] data = line.split(";");
-					Lecture lec = new Lecture(Integer.valueOf(data[0]),
-							data[1], data[2], data[3]);
-					uni.addLecture(data[0], lec);
-				}
-			}
-			br.close();
-
-			// Read the constraintFile and add each line as an object to uni
-			br = new BufferedReader(new FileReader(constraintFile));
-			while ((line = br.readLine()) != null && !line.equals("")) {
-				if (!(line.substring(0, 2).equals("//"))) {
-					String[] data = line.split(";");
-					Lecture l1 = uni.getLectures().get(data[0]);
-					Lecture l2 = uni.getLectures().get(data[1]);
-					String[] cons = data[2].split(",");
-					Relation rel = new Relation(l1, l2);
-					rel.addConstraintsAsStrings(cons);
-					uni.addRelation(rel);
-					uni.addRule(rel);
-				}
-			}
-			br.close();
-
-			// Read the planFile and add the values of each line to the
-			// corresponding objects of uni
-			br = new BufferedReader(new FileReader(planFile));
-			HashMap<String, Lecture> lectures = uni.getLectures();
-			while ((line = br.readLine()) != null && !line.equals("")) {
-				if (!(line.substring(0, 2).equals("//"))) {
-					String[] data = line.split(";");
-					lectures.get(data[2]).setStart(Integer.valueOf(data[0]));
-					lectures.get(data[2]).setEnd(Integer.valueOf(data[1]));
-				}
-			}
-			br.close();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return uni;
-
-	}
-
 	// Iterate over all lectures and convert their starttime and endtime to
-	// constraints
+	// allen constraints
 	private University convertTimesToConstraints(University uni) {
 
 		ArrayList<Relation> rels = uni.getRelations();
@@ -160,13 +105,11 @@ public class FileParser {
 					int l2_start = l2_value.getStart();
 					int l2_end = l2_value.getEnd();
 
-		            if (l1_start == 0 || l2_start ==0){
-		                r.addConstraintsAsStrings(new String[] { "all" });
-		                
-		            }
-					
+					if (l1_start == 0 || l2_start == 0) {
+						r.addConstraintsAsStrings(new String[] { "all" });
 
-                       
+					}
+
 					// equals
 					if (l1_start == l2_start && l1_end == l2_end)
 						r.addConstraintsAsStrings(new String[] { "=" });
@@ -183,12 +126,10 @@ public class FileParser {
 					if (l1_start > l2_end)
 						r.addConstraintsAsStrings(new String[] { ">" });
 					// overlaps
-					if (l1_start < l2_start && l2_start < l1_end
-							&& l2_end > l1_end)
+					if (l1_start < l2_start && l2_start < l1_end && l2_end > l1_end)
 						r.addConstraintsAsStrings(new String[] { "o" });
 					// overlapped by
-					if (l1_start > l2_start && l1_start < l2_end
-							&& l1_end > l2_end)
+					if (l1_start > l2_start && l1_start < l2_end && l1_end > l2_end)
 						r.addConstraintsAsStrings(new String[] { "oi" });
 					// finishes
 					if (l1_start > l2_start && l1_end == l2_end)
