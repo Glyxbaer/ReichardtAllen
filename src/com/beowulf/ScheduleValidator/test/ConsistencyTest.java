@@ -11,12 +11,6 @@ import com.beowulf.ScheduleValidator.model.*;
 
 public class ConsistencyTest {
 
-	private boolean result;
-
-	public boolean getResult() {
-		return result;
-	}
-
 	static public ArrayList<String> testConstraintsOnly(University uni) {
 		return testDefinitions(uni, true);
 	}
