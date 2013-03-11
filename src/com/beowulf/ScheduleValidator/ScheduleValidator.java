@@ -31,6 +31,7 @@ public class ScheduleValidator
         {
             System.out.println("[ERROR] Please open the university earlier. The University has to be opened BEFORE the first lecture starts.");
         }
+        input.close();
 
         // Check if the constraints from the constraintsfile are consistent
         for (String msg : ConsistencyTest.testConstraintsOnly(myUni))
