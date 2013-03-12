@@ -50,8 +50,8 @@
 	        </manifest>
 	        <zipgroupfileset dir="lib" includes="*.jar"/>
 	    </jar>
-	    
-    	<copy todir="${dist.dir}">
+	    <mkdir dir="${dist.dir}/conf" />
+    	<copy todir="${dist.dir}/conf">
     		<fileset dir="${conf.dir}"/>
  		</copy>
     </target> 
