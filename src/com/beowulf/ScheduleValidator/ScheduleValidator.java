@@ -13,12 +13,14 @@ import java.util.Map.Entry;
 
 public class ScheduleValidator
 {
+    private static String BEZIEHUNGEN_FILE_PATH = new String("conf\\A001\\A001_Beziehungen.csv");
+    private static String VERANSTALTUNGEN_FILE_PATH = new String("conf\\A001\\A001_Veranstaltungen.csv");
+    private static String STUNDENPLAN_FILE_PATH = new String("conf\\A001\\A001_Stundenplan_A.csv");
 
     public static void main(String[] args)
     {
 
-        FileParser myParser = new FileParser(new File("conf\\A001\\A001_Beziehungen.csv"), new File("conf\\A001\\A001_Veranstaltungen.csv"), new File(
-                "conf\\A001\\A001_Stundenplan_A.csv"));
+        FileParser myParser = new FileParser(new File(BEZIEHUNGEN_FILE_PATH), new File(VERANSTALTUNGEN_FILE_PATH), new File(STUNDENPLAN_FILE_PATH));
 
         University myUni = myParser.parse();
 

@@ -1,72 +1,87 @@
 package com.beowulf.ScheduleValidator.model;
 
-public class Lecture {
+public class Lecture
+{
 
-	private int id;
-	private String name;
-	private int start;
-	private int end;
-	private String course;
-	private String prof;
+    private int id;
+    private String name;
+    private int start;
+    private int end;
+    private String course;
+    private String prof;
 
-	public Lecture(int id, String name, String prof, String course) {
-		this.id = id;
-		this.name = name;
-		this.prof = prof;
-		this.course = course;
-		
-	}
+    public Lecture(int id, String name, String prof, String course)
+    {
+        this.id = id;
+        this.name = name;
+        this.prof = prof;
+        this.course = course;
 
-	public int getId() {
-		return id;
-	}
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId()
+    {
+        return id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setId(int id)
+    {
+        this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName()
+    {
+        return name;
+    }
 
-	public int getStart() {
-		return start;
-	}
+    public void setName(String name)
+    {
+        this.name = name;
+    }
 
-	public void setStart(int start) {
-		this.start = start;
-	}
+    public int getStart()
+    {
+        return start;
+    }
 
-	public int getEnd() {
-		return end;
-	}
+    public void setStart(int start)
+    {
+        this.start = start;
+    }
 
-	public void setEnd(int end) {
-		this.end = end;
-	}
+    public int getEnd()
+    {
+        return end;
+    }
 
-	public String getCourse() {
-		return course;
-	}
+    public void setEnd(int end)
+    {
+        this.end = end;
+    }
 
-	public void setCourse(String course) {
-		this.course = course;
-	}
+    public String getCourse()
+    {
+        return course;
+    }
 
-	public String getProf() {
-		return prof;
-	}
+    public void setCourse(String course)
+    {
+        this.course = course;
+    }
 
-	public void setProf(String prof) {
-		this.prof = prof;
-	}
+    public String getProf()
+    {
+        return prof;
+    }
 
-	public String toString() {
-		return name + "(" + prof + ", " + course + "): " + start + "-" + end;
-	}
+    public void setProf(String prof)
+    {
+        this.prof = prof;
+    }
+
+    public String toString()
+    {
+        return name + "(" + prof + ", " + course + "): " + start + "-" + end;
+    }
 
 }
