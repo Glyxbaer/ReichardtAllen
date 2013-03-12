@@ -18,9 +18,8 @@ public class ScheduleValidator
     {
 
         FileParser myParser = new FileParser(new File("conf\\A001\\A001_Beziehungen.csv"), new File("conf\\A001\\A001_Veranstaltungen.csv"), new File(
-                "conf\\A001\\A001_Stundenplan_B.csv"));
+                "conf\\A001\\A001_Stundenplan_A.csv"));
 
-        // University myUni = myParser.parseConstraintsOnly();
         University myUni = myParser.parse();
 
         Scanner input = new Scanner(System.in);

@@ -11,6 +11,8 @@ import com.beowulf.ScheduleValidator.model.*;
 
 public class ConsistencyTest {
 
+	// Test class that provides static test-methods, which all take a University-Object as parameter
+
 	static public ArrayList<String> testConstraintsOnly(University uni) {
 		return testDefinitions(uni, true);
 	}
@@ -98,6 +100,7 @@ public class ConsistencyTest {
 
 	}
 
+	// Checks if every lecture starts AFTER the opening time
 	public static boolean testOpening(University myUni, String pOpening) {
 
 		String[] temp = pOpening.split(":");
@@ -147,18 +150,17 @@ public class ConsistencyTest {
 		return errors;
 	}
 
-	// Utility method to check if lectures overlap
+	// Utility method to check if a list of lectures overlap
 	private static HashMap<String, String> validateLectures(ArrayList<Lecture> lecs, ArrayList<Relation> rels) {
 		HashMap<String, String> faults = new HashMap<String, String>();
 
-		// Iterate over all lectures and compare the times with the ones of
-		// every other lecture
+		// Iterate over all lectures and compare the times with every other lecture
 		boolean valid;
 		for (Lecture l1 : lecs) {
 			for (Lecture l2 : lecs) {
 				if (!(l1.getEnd() <= l2.getStart() || l1.getStart() >= l2.getEnd()) && l1.getId() != l2.getId()) {
 					valid = false;
-					// Check if it is permitted by a during/contains constraint
+					// Check if it is permitted by a during/contains/finishes/finishedby constraint
 					for (Relation r : rels) {
 						if ((r.getX1().getId() == l1.getId() || r.getX1().getId() == l2.getId())
 								&& (r.getX2().getId() == l1.getId() || r.getX2().getId() == l2.getId())) {

@@ -24,8 +24,7 @@ public class FileParser {
 		this.planFile = planFile;
 	}
 
-	// Read the data from the 3 config files and create a University Object
-	// filled with it
+	// Read the data from the 3 config files and create a University Object filled with it
 	public University parse() {
 
 		University uni = new University();
@@ -60,8 +59,7 @@ public class FileParser {
 			}
 			br.close();
 
-			// Read the planFile and add the values of each line to the
-			// corresponding objects of uni
+			// Read the planFile and add the values of each line to the corresponding objects of uni
 			br = new BufferedReader(new FileReader(planFile));
 			HashMap<String, Lecture> lectures = uni.getLectures();
 			while ((line = br.readLine()) != null && !line.equals("")) {
@@ -77,18 +75,17 @@ public class FileParser {
 			e.printStackTrace();
 		}
 
+		// Return the Object filled additionally with the constrainst drawn from the timetable
 		return convertTimesToConstraints(uni);
 
 	}
 
-	// Iterate over all lectures and convert their starttime and endtime to
-	// allen constraints
+	// Iterate over all lectures and convert their starttime and endtime to allen constraints
 	private University convertTimesToConstraints(University uni) {
 
 		ArrayList<Relation> rels = uni.getRelations();
 		HashMap<String, Lecture> lecs = uni.getLectures();
-		// Compare the times of every lecture to every the times of every other
-		// lecture
+		// Compare the times of every lecture to every the times of every other lecture
 		for (Entry<String, Lecture> e1 : lecs.entrySet()) {
 			String l1_key = e1.getKey();
 			Lecture l1_value = e1.getValue();
@@ -105,11 +102,9 @@ public class FileParser {
 					int l2_start = l2_value.getStart();
 					int l2_end = l2_value.getEnd();
 
-					if (l1_start == 0 || l2_start == 0) {
+					// all_constraint
+					if (l1_start == 0 || l2_start == 0)
 						r.addConstraintsAsStrings(new String[] { "all" });
-
-					}
-
 					// equals
 					if (l1_start == l2_start && l1_end == l2_end)
 						r.addConstraintsAsStrings(new String[] { "=" });
@@ -146,11 +141,8 @@ public class FileParser {
 
 					rels.add(r);
 				}
-
 			}
-
 		}
-
 		return uni;
 	}
 
